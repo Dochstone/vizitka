@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TG STONE — Продвижение в Telegram</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .banner {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a0e1a 0%, #0d1117 40%, #111827 100%);
+    font-family: 'Manrope', sans-serif;
+  }
+
+  /* === MESH GRADIENT BACKGROUND === */
+  .mesh-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .mesh-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0;
+    animation: orbPulse 6s ease-in-out infinite, orbFadeIn 1.5s ease-out forwards;
+  }
+
+  .mesh-orb.orb1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #2563eb 0%, transparent 70%);
+    top: -100px; left: -50px;
+    animation-delay: 0s;
+  }
+
+  .mesh-orb.orb2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+    bottom: -80px; right: 100px;
+    animation-delay: 2s;
+  }
+
+  .mesh-orb.orb3 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+    top: 50%; left: 55%;
+    transform: translate(-50%, -50%);
+    animation-delay: 4s;
+  }
+
+  .mesh-orb.orb4 {
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, #ec4899 0%, transparent 70%);
+    top: 20px; right: 200px;
+    animation-delay: 1s;
+  }
+
+  @keyframes orbPulse {
+    0%, 100% { transform: scale(1) translate(0, 0); }
+    33% { transform: scale(1.15) translate(15px, -10px); }
+    66% { transform: scale(0.9) translate(-10px, 15px); }
+  }
+
+  @keyframes orbFadeIn {
+    to { opacity: 0.5; }
+  }
+
+  /* === GRID OVERLAY === */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridSlide 20s linear infinite;
+  }
+
+  @keyframes gridSlide {
+    to { background-position: 60px 60px; }
+  }
+
+  /* === NOISE === */
+  .noise {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.035;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* === CONTENT === */
+  .content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 60px 70px;
+  }
+
+  .left {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .right {
+    flex: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* === TAG === */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(37, 99, 235, 0.15);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #60a5fa;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    width: fit-content;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.8s ease-out 0.3s forwards;
+  }
+
+  .tag .dot {
+    width: 8px; height: 8px;
+    background: #3b82f6;
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* === TITLE === */
+  .title {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 1;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUp 0.9s ease-out 0.5s forwards;
+  }
+
+  .title span {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* === SUBTITLE === */
+  .subtitle {
+    font-size: 20px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+    max-width: 480px;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: slideUp 0.8s ease-out 0.7s forwards;
+  }
+
+  /* === SERVICES PILLS === */
+  .services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: slideUp 0.8s ease-out 0.9s forwards;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.4s ease;
+    animation: pillGlow 4s ease-in-out infinite;
+  }
+
+  .pill:nth-child(1) { animation-delay: 0s; }
+  .pill:nth-child(2) { animation-delay: 0.7s; }
+  .pill:nth-child(3) { animation-delay: 1.4s; }
+  .pill:nth-child(4) { animation-delay: 2.1s; }
+  .pill:nth-child(5) { animation-delay: 2.8s; }
+  .pill:nth-child(6) { animation-delay: 3.5s; }
+
+  @keyframes pillGlow {
+    0%, 100% { border-color: rgba(255,255,255,0.08); background: rgba(255,255,255,0.05); }
+    50% { border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.08); }
+  }
+
+  .pill .emoji {
+    font-size: 16px;
+  }
+
+  /* === CTA === */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 44px;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 40%, #ec4899 100%);
+    background-size: 200% 200%;
+    border-radius: 18px;
+    color: #fff;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    width: fit-content;
+    position: relative;
+    overflow: hidden;
+    animation:
+      ctaPulse 2.5s ease-in-out 2s infinite,
+      ctaGradient 4s ease-in-out infinite;
+    box-shadow:
+      0 0 20px rgba(37, 99, 235, 0.4),
+      0 0 50px rgba(124, 58, 237, 0.2),
+      0 8px 30px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    animation: shimmer 2.5s ease-in-out infinite 2s;
+  }
+
+  .cta::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+    background-size: 300% 300%;
+    z-index: -1;
+    animation: ctaBorder 3s linear infinite;
+    filter: blur(6px);
+    opacity: 0.6;
+  }
+
+  @keyframes ctaPulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 0 20px rgba(37, 99, 235, 0.4),
+        0 0 50px rgba(124, 58, 237, 0.2),
+        0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow:
+        0 0 30px rgba(37, 99, 235, 0.6),
+        0 0 70px rgba(124, 58, 237, 0.35),
+        0 0 100px rgba(236, 72, 153, 0.15),
+        0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  @keyframes ctaGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes ctaBorder {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  .cta-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: slideUp 0.8s ease-out 1.1s forwards;
+  }
+
+  .cta-arrow {
+    font-size: 32px;
+    color: #60a5fa;
+    transform: rotate(180deg);
+    display: inline-block;
+    animation: arrowPoke 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(59,130,246,0.5));
+  }
+
+  @keyframes arrowPoke {
+    0%, 100% { transform: rotate(180deg) translateX(0); opacity: 0.7; }
+    50% { transform: rotate(180deg) translateX(-10px); opacity: 1; }
+  }
+
+  .cta .arrow {
+    display: none;
+  }
+
+  @keyframes arrowBounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+  }
+
+  /* === RIGHT SIDE — FLOATING CARDS === */
+  .floating-cards {
+    position: relative;
+    width: 400px;
+    height: 500px;
+  }
+
+  .floating-cards {
+    position: relative;
+    width: 340px;
+    height: 520px;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .cards-track {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: carouselScroll 36s linear infinite;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 22px 24px;
+    color: #fff;
+    width: 300px;
+    min-height: 148px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Бесшовная петля: скроллим на 12 карточек (12 × 164px = 1968px), 2 полных цикла */
+  @keyframes carouselScroll {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-1968px); }
+  }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .card-title {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.4;
+  }
+
+  .card-price {
+    margin-top: 12px;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* === DECORATIVE ELEMENTS === */
+  .deco-ring {
+    position: absolute;
+    border: 1px solid rgba(59,130,246,0.1);
+    border-radius: 50%;
+    z-index: 5;
+    animation: ringExpand 8s ease-in-out infinite;
+  }
+
+  .deco-ring.r1 {
+    width: 300px; height: 300px;
+    right: -50px; top: -80px;
+  }
+
+  .deco-ring.r2 {
+    width: 200px; height: 200px;
+    right: 80px; bottom: 40px;
+    animation-delay: 3s;
+  }
+
+  @keyframes ringExpand {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.15); opacity: 0.6; }
+  }
+
+  /* === BOTTOM BAR === */
+  .bottom-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #7c3aed, #06b6d4, #ec4899, #2563eb);
+    background-size: 300% 100%;
+    animation: gradientFlow 4s linear infinite;
+    z-index: 20;
+  }
+
+  @keyframes gradientFlow {
+    0% { background-position: 0% 0; }
+    100% { background-position: 300% 0; }
+  }
+
+  /* === CORNER CONTACT BUTTON === */
+  .corner-contact {
+    position: absolute;
+    top: 30px; right: 40px;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 26px;
+    background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(124,58,237,0.15));
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 16px;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1.3s forwards, contactGlow 3s ease-in-out 2s infinite;
+    transition: all 0.3s ease;
+    box-shadow:
+      0 0 15px rgba(37,99,235,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+  }
+
+  .corner-contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(124,58,237,0.08));
+    z-index: -1;
+  }
+
+  .corner-contact::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    border-radius: 16px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    animation: shimmer 4s ease-in-out infinite 3s;
+  }
+
+  .corner-contact:hover {
+    background: linear-gradient(135deg, rgba(37,99,235,0.3), rgba(124,58,237,0.3));
+    border-color: rgba(59,130,246,0.6);
+    box-shadow:
+      0 0 25px rgba(37,99,235,0.3),
+      0 0 50px rgba(124,58,237,0.1),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    transform: translateY(-1px);
+  }
+
+  @keyframes contactGlow {
+    0%, 100% {
+      border-color: rgba(59,130,246,0.3);
+      box-shadow: 0 0 15px rgba(37,99,235,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    50% {
+      border-color: rgba(124,58,237,0.5);
+      box-shadow: 0 0 25px rgba(37,99,235,0.25), 0 0 40px rgba(124,58,237,0.1), inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+  }
+
+  .corner-tg-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 4px rgba(96,165,250,0.4));
+  }
+
+  /* === PARTICLES === */
+  .particles {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: rgba(59,130,246,0.4);
+    border-radius: 50%;
+    animation: particleRise 8s linear infinite;
+  }
+
+  @keyframes particleRise {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(-100px) scale(1); opacity: 0; }
+  }
+
+  @keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .cta .tg-logo {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: slideUp 0.8s ease-out 1.1s forwards;
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 28px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 18px;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cta-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+  }
+
+  /* === MODAL === */
+  .modal-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .modal {
+    background: linear-gradient(145deg, #131825, #0f1420);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 32px;
+    width: 380px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 40px rgba(37,99,235,0.1);
+    animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes modalPop {
+    0% { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .modal-title {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #fff;
+  }
+
+  .modal-close {
+    width: 32px; height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.5);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .modal-close:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+  }
+
+  .modal-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .modal-link:hover {
+    background: rgba(37,99,235,0.1);
+    border-color: rgba(37,99,235,0.3);
+    transform: translateX(4px);
+  }
+
+  .ml-icon {
+    font-size: 24px;
+    width: 40px; height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .ml-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .ml-name {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .ml-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+  }
+
+  .ml-arrow {
+    color: rgba(255,255,255,0.2);
+    font-size: 16px;
+    transition: all 0.25s ease;
+  }
+
+  .modal-link:hover .ml-arrow {
+    color: #60a5fa;
+    transform: translateX(3px);
+  }
+
+  /* === BOTTOM BADGES === */
+  .bottom-badges {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: slideUp 0.8s ease-out 1.5s forwards;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .crypto-badge {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    color: #4ade80;
+    animation: badgePulse 3s ease-in-out infinite 2s;
+  }
+
+  .promo-badge {
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    color: #fbbf24;
+    animation: badgePulse 3s ease-in-out infinite 2.5s;
+  }
+
+  .ref-badge {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    color: #a78bfa;
+    animation: badgePulse 3s ease-in-out infinite 3s;
+  }
+
+  .stars-badge {
+    background: rgba(236, 72, 153, 0.1);
+    border: 1px solid rgba(236, 72, 153, 0.25);
+    color: #f472b6;
+    animation: badgePulse 3s ease-in-out infinite 3.5s;
+  }
+
+  .badge-icon {
+    font-size: 14px;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { border-color: rgba(255,255,255,0.1); }
+    50% { border-color: currentColor; box-shadow: 0 0 12px rgba(255,255,255,0.05); }
+  }
+
+  /* === STATS === */
+  .stats {
+    display: flex;
+    gap: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.8s ease-out 1.3s forwards;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-num {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: #fff;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <!-- Background layers -->
+  <div class="mesh-bg">
+    <div class="mesh-orb orb1"></div>
+    <div class="mesh-orb orb2"></div>
+    <div class="mesh-orb orb3"></div>
+    <div class="mesh-orb orb4"></div>
+  </div>
+  <div class="grid-overlay"></div>
+  <div class="noise"></div>
+
+  <!-- Particles -->
+  <div class="particles">
+    <div class="particle" style="left:10%;animation-delay:0s;animation-duration:7s"></div>
+    <div class="particle" style="left:25%;animation-delay:1.5s;animation-duration:9s"></div>
+    <div class="particle" style="left:40%;animation-delay:3s;animation-duration:6s"></div>
+    <div class="particle" style="left:60%;animation-delay:0.5s;animation-duration:8s"></div>
+    <div class="particle" style="left:75%;animation-delay:2s;animation-duration:7.5s"></div>
+    <div class="particle" style="left:90%;animation-delay:4s;animation-duration:6.5s"></div>
+    <div class="particle" style="left:50%;animation-delay:1s;animation-duration:10s"></div>
+    <div class="particle" style="left:15%;animation-delay:3.5s;animation-duration:8.5s"></div>
+  </div>
+
+  <!-- Deco rings -->
+  <div class="deco-ring r1"></div>
+  <div class="deco-ring r2"></div>
+
+  <!-- Corner contacts button -->
+  <div class="corner-contact" onclick="document.getElementById('contactModal').style.display='flex'">
+    <svg class="corner-tg-icon" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    Контакты
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="left">
+      <div class="tag">
+        <span class="dot"></span>
+        Продвижение в Telegram с 2019 года
+      </div>
+
+      <h1 class="title">TG <span>STONE</span></h1>
+
+      <p class="subtitle">
+        Выводим ботов в топ поиска, накрутка подписчиков и просмотров, инвайтинг живой аудитории, разработка ботов под ключ, продажа чатов и каналов с историей. Быстро, безопасно, с гарантией.
+      </p>
+
+      <div class="services">
+        <div class="pill"><span class="emoji">🚀</span> Вывод в топ</div>
+        <div class="pill"><span class="emoji">📈</span> Накрутка</div>
+        <div class="pill"><span class="emoji">💬</span> Чаты 2020–2024</div>
+        <div class="pill"><span class="emoji">📢</span> Каналы</div>
+        <div class="pill"><span class="emoji">🤖</span> Разработка ботов</div>
+        <div class="pill"><span class="emoji">👥</span> Инвайтинг</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">7 лет</div>
+          <div class="stat-label">на рынке</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">5 000+</div>
+          <div class="stat-label">успешных заказов</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">техподдержка</div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <div class="cta" >
+          <svg class="tg-logo" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          Заказать услуги
+        </div>
+      </div>
+
+      <div class="bottom-badges">
+        <div class="badge crypto-badge">
+          <span class="badge-icon">💲</span> Оплата: USDT · TON · BTC · CryptoBot
+        </div>
+        <div class="badge promo-badge">
+          <span class="badge-icon">🎁</span> Промокод на скидку — в боте
+        </div>
+        <div class="badge ref-badge">
+          <span class="badge-icon">👥</span> Реферальная программа — 10%
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="floating-cards">
+        <div class="cards-track">
+          <!-- Цикл 1 -->
+          <div class="card">
+            <div class="card-icon">🚀</div>
+            <div class="card-title">Вывод в топ</div>
+            <div class="card-desc">Ваш бот в ТОП-3 поиска Telegram за 2–7 дней</div>
+            <div class="card-price">от $12</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📈</div>
+            <div class="card-title">Накрутка · SMM-панель</div>
+            <div class="card-desc">Подписчики, просмотры, реакции для каналов и групп</div>
+            <div class="card-price">tgstone.media</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">💬</div>
+            <div class="card-title">Готовые чаты</div>
+            <div class="card-desc">Живые аккаунты с историей 2020–2024</div>
+            <div class="card-price">от $8</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📢</div>
+            <div class="card-title">Каналы с историей</div>
+            <div class="card-desc">Каналы с датой основания от 2017 года</div>
+            <div class="card-price">от $3</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🤖</div>
+            <div class="card-title">Разработка ботов</div>
+            <div class="card-desc">Создание Telegram-ботов любой сложности</div>
+            <div class="card-price">под ключ</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">👥</div>
+            <div class="card-title">Инвайтинг</div>
+            <div class="card-desc">Привлечение живой аудитории в группы и каналы</div>
+            <div class="card-price">от $50</div>
+          </div>
+          <!-- Цикл 2 -->
+          <div class="card">
+            <div class="card-icon">🚀</div>
+            <div class="card-title">Вывод в топ</div>
+            <div class="card-desc">Ваш бот в ТОП-3 поиска Telegram за 2–7 дней</div>
+            <div class="card-price">от $12</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📈</div>
+            <div class="card-title">Накрутка · SMM-панель</div>
+            <div class="card-desc">Подписчики, просмотры, реакции для каналов и групп</div>
+            <div class="card-price">tgstone.media</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">💬</div>
+            <div class="card-title">Готовые чаты</div>
+            <div class="card-desc">Живые аккаунты с историей 2020–2024</div>
+            <div class="card-price">от $8</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📢</div>
+            <div class="card-title">Каналы с историей</div>
+            <div class="card-desc">Каналы с датой основания от 2017 года</div>
+            <div class="card-price">от $3</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🤖</div>
+            <div class="card-title">Разработка ботов</div>
+            <div class="card-desc">Создание Telegram-ботов любой сложности</div>
+            <div class="card-price">под ключ</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">👥</div>
+            <div class="card-title">Инвайтинг</div>
+            <div class="card-desc">Привлечение живой аудитории в группы и каналы</div>
+            <div class="card-price">от $50</div>
+          </div>
+          <!-- Цикл 3 (для бесшовности) -->
+          <div class="card">
+            <div class="card-icon">🚀</div>
+            <div class="card-title">Вывод в топ</div>
+            <div class="card-desc">Ваш бот в ТОП-3 поиска Telegram за 2–7 дней</div>
+            <div class="card-price">от $12</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📈</div>
+            <div class="card-title">Накрутка · SMM-панель</div>
+            <div class="card-desc">Подписчики, просмотры, реакции для каналов и групп</div>
+            <div class="card-price">tgstone.media</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">💬</div>
+            <div class="card-title">Готовые чаты</div>
+            <div class="card-desc">Живые аккаунты с историей 2020–2024</div>
+            <div class="card-price">от $8</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📢</div>
+            <div class="card-title">Каналы с историей</div>
+            <div class="card-desc">Каналы с датой основания от 2017 года</div>
+            <div class="card-price">от $3</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🤖</div>
+            <div class="card-title">Разработка ботов</div>
+            <div class="card-desc">Создание Telegram-ботов любой сложности</div>
+            <div class="card-price">под ключ</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">👥</div>
+            <div class="card-title">Инвайтинг</div>
+            <div class="card-desc">Привлечение живой аудитории в группы и каналы</div>
+            <div class="card-price">от $50</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom gradient bar -->
+  <div class="bottom-bar"></div>
+
+  <!-- Modal Контакты -->
+  <div class="modal-overlay" id="contactModal" onclick="if(event.target===this)this.style.display='none'">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">📬 Контакты TG STONE</div>
+        <div class="modal-close" onclick="document.getElementById('contactModal').style.display='none'">✕</div>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://dochstone.github.io/sitezar/" target="_blank">
+          <span class="ml-icon">🌐</span>
+          <span class="ml-text"><span class="ml-name">Сайт</span><span class="ml-desc">Гайды и кейсы</span></span>
+          <span class="ml-arrow">→</span>
+        </a>
+        <a class="modal-link" href="https://t.me/tgstonebot" target="_blank">
+          <span class="ml-icon">🤖</span>
+          <span class="ml-text"><span class="ml-name">Бот</span><span class="ml-desc">@tgstonebot</span></span>
+          <span class="ml-arrow">→</span>
+        </a>
+        <a class="modal-link" href="https://tgstone.media" target="_blank">
+          <span class="ml-icon">📈</span>
+          <span class="ml-text"><span class="ml-name">SMM-панель</span><span class="ml-desc">tgstone.media</span></span>
+          <span class="ml-arrow">→</span>
+        </a>
+        <a class="modal-link" href="https://t.me/tgstone_support" target="_blank">
+          <span class="ml-icon">🛟</span>
+          <span class="ml-text"><span class="ml-name">Техподдержка</span><span class="ml-desc">@tgstone_support</span></span>
+          <span class="ml-arrow">→</span>
+        </a>
+        <a class="modal-link" href="https://t.me/tgstone_support" target="_blank">
+          <span class="ml-icon">📢</span>
+          <span class="ml-text"><span class="ml-name">Реклама</span><span class="ml-desc">Разместить у нас</span></span>
+          <span class="ml-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
