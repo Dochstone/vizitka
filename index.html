@@ -893,8 +893,8 @@
   function onOrder() {
     if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     // Отправляем данные в бот
-    if (tg) {
-      tg.sendData(JSON.stringify({ action: 'order' }));
+    if (tg?.openTelegramLink) {
+      tg.openTelegramLink('https://t.me/tgstonebot');
     } else {
       window.open('https://t.me/tgstonebot', '_blank');
     }
